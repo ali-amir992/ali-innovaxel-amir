@@ -1,3 +1,2 @@
-import { nanoid } from "nanoid";
-
-export const generateShortCode = (length = 6): string => nanoid(length);
+const { nanoid } = require("nanoid");
+export const generateShortCode = () => nanoid(6);

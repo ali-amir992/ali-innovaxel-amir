@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IURL extends Document {
-  originalUrl: string;
+  url: string;
   shortCode: string;
   accessCount: number;
   createdAt: Date;
@@ -10,7 +10,7 @@ export interface IURL extends Document {
 
 const URLSchema = new Schema<IURL>(
   {
-    originalUrl: {
+    url: {
       type: String,
       required: true,
       trim: true,
