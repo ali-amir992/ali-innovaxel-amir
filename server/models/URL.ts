@@ -28,6 +28,9 @@ const URLSchema = new Schema<IURL>(
   { timestamps: true }
 );
 
+//creating an index on ShortCode to ensure fast lookups
+URLSchema.index({ shortCode: 1 }, { unique: true });
+
 const URLModel = mongoose.model<IURL>("URL", URLSchema);
 
 export default URLModel;
