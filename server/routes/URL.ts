@@ -1,14 +1,15 @@
 import express from "express";
 import {
   createShortUrl,
-  getOriginalURL
+  getOriginalURL,
+  updateShortURL
 } from "@controllers/URL";
 
 const router = express.Router();
 
 router.post("/shorten", createShortUrl);
 router.get("/shorten/:shortCode", getOriginalURL);
-// router.put("/shorten/:shortCode", updateShortUrl);
+router.put("/shorten/:shortCode", updateShortURL);
 // router.delete("/shorten/:shortCode", deleteShortUrl);
 // router.get("/shorten/:shortCode/stats", getUrlStats);
 
