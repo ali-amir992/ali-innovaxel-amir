@@ -1,0 +1,14 @@
+{
+    "plugins": [
+      ["module-resolver", {
+        "alias": {
+          "@config": "./config",
+          "@models": "./models",
+          "@routes": "./routes",
+          "@controllers": "./controllers",
+          "@utils": "./utils"
+        }
+      }]
+    ]
+  }
+  
