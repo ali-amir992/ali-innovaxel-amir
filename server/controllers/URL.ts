@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { generateShortCode } from "@utils/shortCodeGenerator";
 import URLModel from "@models/URL";
 
-export const createShortUrl = async (req: Request, res: Response) => {
+export const createShortURL = async (req: Request, res: Response) => {
     try {
         const { url } = req.body;
 
@@ -92,3 +92,23 @@ export const updateShortURL = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Server error" });
     }
 };
+
+export const deleteShortURL = async (req: Request, res: Response) => {
+    try {
+      const { shortCode } = req.params;
+  
+      // Find and delete the short URL
+      const deletedUrl = await URLModel.findOneAndDelete({ shortCode });
+  
+      if (!deletedUrl) {
+         res.status(404).json({ error: "Short URL not found" });
+         return
+      }
+  
+      // Respond with 204 No Content on successful deletion
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting short URL:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  };
