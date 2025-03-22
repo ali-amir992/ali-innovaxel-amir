@@ -18,7 +18,7 @@ const URLSchema = new Schema<IURL>(
     shortCode: {
       type: String,
       required: true,
-      unique: true,
+      unique: true, //automatically index is created for fast retrievals
     },
     accessCount: {
       type: Number,
@@ -28,8 +28,6 @@ const URLSchema = new Schema<IURL>(
   { timestamps: true }
 );
 
-//creating an index on ShortCode to ensure fast lookups
-URLSchema.index({ shortCode: 1 }, { unique: true });
 
 const URLModel = mongoose.model<IURL>("URL", URLSchema);
 
