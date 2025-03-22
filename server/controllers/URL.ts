@@ -43,6 +43,10 @@ export const getOriginalURL = async (req: Request, res: Response) => {
             return;
         }
 
+        //incrementing the count
+        url.accessCount += 1;
+        await url.save();
+
         res.status(200).json({
             id: url._id,
             url: url.url,
@@ -65,7 +69,7 @@ export const updateShortURL = async (req: Request, res: Response) => {
         // Validate request body
         if (!url) {
             res.status(400).json({ error: "URL is required" });
-            return
+            return;
         }
 
         // Find and update the URL document
@@ -95,20 +99,47 @@ export const updateShortURL = async (req: Request, res: Response) => {
 
 export const deleteShortURL = async (req: Request, res: Response) => {
     try {
-      const { shortCode } = req.params;
-  
-      // Find and delete the short URL
-      const deletedUrl = await URLModel.findOneAndDelete({ shortCode });
-  
-      if (!deletedUrl) {
-         res.status(404).json({ error: "Short URL not found" });
-         return
-      }
-  
-      // Respond with 204 No Content on successful deletion
-      res.status(204).send();
+        const { shortCode } = req.params;
+
+        // Find and delete the short URL
+        const deletedUrl = await URLModel.findOneAndDelete({ shortCode });
+
+        if (!deletedUrl) {
+            res.status(404).json({ error: "Short URL not found" });
+            return
+        }
+
+        // Respond with 204 No Content on successful deletion
+        res.status(204).send();
     } catch (error) {
-      console.error("Error deleting short URL:", error);
-      res.status(500).json({ error: "Server error" });
+        console.error("Error deleting short URL:", error);
+        res.status(500).json({ error: "Server error" });
     }
-  };
+};
+
+export const getShortURLStats = async (req: Request, res: Response) => {
+    try {
+        const { shortCode } = req.params;
+
+        // Find the URL in the database
+        const urlEntry = await URLModel.findOne({ shortCode });
+
+        if (!urlEntry) {
+             res.status(404).json({ error: "Short URL not found" });
+             return;
+        }
+
+        // Return statistics including access count
+        res.status(200).json({
+            id: urlEntry._id,
+            url: urlEntry.url,
+            shortCode: urlEntry.shortCode,
+            createdAt: urlEntry.createdAt,
+            updatedAt: urlEntry.updatedAt,
+            accessCount: urlEntry.accessCount,
+        });
+    } catch (error) {
+        console.error("Error fetching short URL stats:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+}
