@@ -14,7 +14,7 @@ export const createShortUrl = async (req: Request, res: Response) => {
         // Check if the URL already exists in the database
         let existingUrl = await URLModel.findOne({ url });
         if (existingUrl) {
-            res.status(200).json(existingUrl); // if true, return the existing url
+            res.status(400).json({error : "Url already exists"}); 
             return;
         }
 
