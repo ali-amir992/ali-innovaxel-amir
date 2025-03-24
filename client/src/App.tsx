@@ -27,20 +27,11 @@ export default function App() {
     }
   };
 
+
   const fetchOriginalUrl = async () => {
-    try {
-      const res = await axios.get<ApiResponse>(`${API_BASE_URL}/${shortCode}`);
-      setResponse(res.data);
-      console.log(response)
-
-      if (res.data.url) {
-        window.location.href = res.data.url; // Redirect to the original URL
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
+    window.location.href = `${API_BASE_URL}/${shortCode}`; // ✅ Backend handles redirection
   };
+
 
   const updateShortUrl = async () => {
     try {

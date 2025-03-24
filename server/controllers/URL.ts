@@ -46,14 +46,14 @@ export const getOriginalURL = async (req: Request, res: Response) => {
         //incrementing the count
         url.accessCount += 1;
         await url.save();
-
-        res.status(200).json({
-            id: url._id,
-            url: url.url,
-            shortCode: url.shortCode,
-            createdAt: url.createdAt,
-            updatedAt: url.updatedAt,
-        });
+        res.redirect(301, url.url);
+        // res.status(200).json({
+        //     id: url._id,
+        //     url: url.url,
+        //     shortCode: url.shortCode,
+        //     createdAt: url.createdAt,
+        //     updatedAt: url.updatedAt,
+        // });
     } catch (error) {
         console.error("Error retrieving original URL:", error);
         res.status(500).json({ error: "Server error" });
