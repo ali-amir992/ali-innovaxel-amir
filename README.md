@@ -18,6 +18,8 @@ A simple and efficient URL shortener built with **Node.js, Express.js, and TypeS
 - **Database:** MongoDB with Mongoose ORM
 - **Frontend:** React.js (Vite), TypeScript
 - **HTTP Client:** Axios
+  - **Libraries:**
+  - `nanoid` – Generates unique, collision-resistant short codes
 
 ## 📂 Project Structure
 
